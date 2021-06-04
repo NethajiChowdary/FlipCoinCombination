@@ -2,11 +2,25 @@ echo "Welcome to Flip Coin Combination"
 heads=1
 tails=0
 
-toss=$((RANDOM%2))
+declare -A res
 
-if [ $toss -eq $heads ]
-then
-   echo "Head wins"
-else
-   echo "Tail wins "
-fi
+echo "Enter n for the loop "
+read n
+
+for (( i=0;i<n;i++ ))
+do
+   toss=$((RANDOM%2))
+   if [ $toss -eq $heads ]
+   then
+       res['heads']=$(("${res['heads']}"+1))
+   else
+       res['tails']=$(("${res['tails']}"+1))
+
+   fi
+done
+
+headcnt=$(($n-${res['heads']}))
+headpercent=$((($headcnt*100)/$n))
+echo "tails=${res['tails']} and heads=${res['heads']}"
+echo "occurance of tails = $headpercent% and head = $((100-$headpercent))%" 
+
